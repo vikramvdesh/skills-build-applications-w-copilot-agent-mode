@@ -3,16 +3,29 @@ import { API_BASE_URL } from '../utils/api';
 
 function Users() {
   const [users, setUsers] = useState([]);
+  const [teams, setTeams] = useState([]);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [team, setTeam] = useState('');
+  const [teamId, setTeamId] = useState('');
 
   useEffect(() => {
+    fetchUsers();
+    fetchTeams();
+  }, []);
+
+  const fetchUsers = () => {
     fetch(`${API_BASE_URL}users/`)
       .then(response => response.json())
       .then(data => setUsers(data))
       .catch(error => console.error('Error fetching users:', error));
-  }, []);
+  };
+
+  const fetchTeams = () => {
+    fetch(`${API_BASE_URL}teams/`)
+      .then(response => response.json())
+      .then(data => setTeams(data))
+      .catch(error => console.error('Error fetching teams:', error));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,14 +34,14 @@ function Users() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, email, team }),
+      body: JSON.stringify({ name, email, team_id: teamId, password: 'defaultpassword' }),
     })
       .then(response => response.json())
       .then(data => {
-        setUsers([...users, data]);
+        fetchUsers(); // Refetch users to get updated data
         setName('');
         setEmail('');
-        setTeam('');
+        setTeamId('');
       })
       .catch(error => console.error('Error creating user:', error));
   };
@@ -66,14 +79,18 @@ function Users() {
             </div>
             <div className="mb-3">
               <label htmlFor="team" className="form-label">Team</label>
-              <input
-                type="text"
+              <select
                 className="form-control"
                 id="team"
-                value={team}
-                onChange={(e) => setTeam(e.target.value)}
+                value={teamId}
+                onChange={(e) => setTeamId(e.target.value)}
                 required
-              />
+              >
+                <option value="">Select a team</option>
+                {teams.map(team => (
+                  <option key={team.id} value={team.id}>{team.name}</option>
+                ))}
+              </select>
             </div>
             <button type="submit" className="btn btn-primary">Add User</button>
           </form>
@@ -99,7 +116,7 @@ function Users() {
                   <td>{user.id}</td>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
-                  <td>{user.team}</td>
+                  <td>{user.team_name}</td>
                 </tr>
               ))}
             </tbody>
