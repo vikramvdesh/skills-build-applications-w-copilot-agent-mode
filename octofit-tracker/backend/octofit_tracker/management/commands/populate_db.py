@@ -23,10 +23,10 @@ class Command(BaseCommand):
 
         # Create Users (superheroes)
         users = [
-            FitnessUser.objects.create(name='Iron Man', email='ironman@marvel.com', team=marvel),
-            FitnessUser.objects.create(name='Captain America', email='cap@marvel.com', team=marvel),
-            FitnessUser.objects.create(name='Batman', email='batman@dc.com', team=dc),
-            FitnessUser.objects.create(name='Wonder Woman', email='wonderwoman@dc.com', team=dc),
+            FitnessUser.objects.create(name='Iron Man', email='ironman@marvel.com', team_id=str(marvel.id), password='password123'),
+            FitnessUser.objects.create(name='Captain America', email='cap@marvel.com', team_id=str(marvel.id), password='password123'),
+            FitnessUser.objects.create(name='Batman', email='batman@dc.com', team_id=str(dc.id), password='password123'),
+            FitnessUser.objects.create(name='Wonder Woman', email='wonderwoman@dc.com', team_id=str(dc.id), password='password123'),
         ]
 
         # Create Workouts
@@ -35,16 +35,16 @@ class Command(BaseCommand):
 
         # Create Activities
         from datetime import date
-        Activity.objects.create(user=users[0], type='Pushups', duration=30, date=date.today())
-        Activity.objects.create(user=users[1], type='Running', duration=45, date=date.today())
-        Activity.objects.create(user=users[2], type='Pushups', duration=20, date=date.today())
-        Activity.objects.create(user=users[3], type='Running', duration=60, date=date.today())
+        Activity.objects.create(user_id=str(users[0].id), type='Pushups', duration=30, date=date.today())
+        Activity.objects.create(user_id=str(users[1].id), type='Running', duration=45, date=date.today())
+        Activity.objects.create(user_id=str(users[2].id), type='Pushups', duration=20, date=date.today())
+        Activity.objects.create(user_id=str(users[3].id), type='Running', duration=60, date=date.today())
 
         # Create Leaderboard
-        Leaderboard.objects.create(user=users[0], score=100)
-        Leaderboard.objects.create(user=users[1], score=200)
-        Leaderboard.objects.create(user=users[2], score=150)
-        Leaderboard.objects.create(user=users[3], score=250)
+        Leaderboard.objects.create(user_id=str(users[0].id), score=100)
+        Leaderboard.objects.create(user_id=str(users[1].id), score=200)
+        Leaderboard.objects.create(user_id=str(users[2].id), score=150)
+        Leaderboard.objects.create(user_id=str(users[3].id), score=250)
 
         # Ensure unique index on email (MongoDB shell command)
         # This is best done via mongosh, but for demonstration, we attempt via Djongo raw command

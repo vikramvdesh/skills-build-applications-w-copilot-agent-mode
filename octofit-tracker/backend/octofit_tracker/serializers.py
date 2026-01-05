@@ -7,13 +7,18 @@ class TeamSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class FitnessUserSerializer(serializers.ModelSerializer):
-    team = TeamSerializer(read_only=True)
-    team_id = serializers.PrimaryKeyRelatedField(queryset=Team.objects.all(), source='team', write_only=True)
-    password = serializers.CharField(write_only=True)
+    team_name = serializers.SerializerMethodField()
     
     class Meta:
         model = FitnessUser
-        fields = ['id', 'name', 'email', 'team', 'team_id', 'password']
+        fields = ['id', 'name', 'email', 'team_id', 'team_name', 'password']
+    
+    def get_team_name(self, obj):
+        try:
+            team = Team.objects.get(id=obj.team_id)
+            return team.name
+        except Team.DoesNotExist:
+            return None
     
     def create(self, validated_data):
         password = validated_data.pop('password')
@@ -23,11 +28,18 @@ class FitnessUserSerializer(serializers.ModelSerializer):
         return user
 
 class ActivitySerializer(serializers.ModelSerializer):
-    user = FitnessUserSerializer(read_only=True)
-    user_id = serializers.PrimaryKeyRelatedField(queryset=FitnessUser.objects.all(), source='user', write_only=True)
+    user_name = serializers.SerializerMethodField()
+    
     class Meta:
         model = Activity
-        fields = ['id', 'user', 'user_id', 'type', 'duration', 'date']
+        fields = ['id', 'user_id', 'user_name', 'type', 'duration', 'date']
+    
+    def get_user_name(self, obj):
+        try:
+            user = FitnessUser.objects.get(id=obj.user_id)
+            return user.name
+        except FitnessUser.DoesNotExist:
+            return None
 
 class WorkoutSerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,8 +47,15 @@ class WorkoutSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class LeaderboardSerializer(serializers.ModelSerializer):
-    user = FitnessUserSerializer(read_only=True)
-    user_id = serializers.PrimaryKeyRelatedField(queryset=FitnessUser.objects.all(), source='user', write_only=True)
+    user_name = serializers.SerializerMethodField()
+    
     class Meta:
         model = Leaderboard
-        fields = ['id', 'user', 'user_id', 'score']
+        fields = ['id', 'user_id', 'user_name', 'score']
+    
+    def get_user_name(self, obj):
+        try:
+            user = FitnessUser.objects.get(id=obj.user_id)
+            return user.name
+        except FitnessUser.DoesNotExist:
+            return None

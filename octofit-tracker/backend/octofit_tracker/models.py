@@ -37,14 +37,14 @@ class FitnessUser(AbstractBaseUser):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='members')
+    team_id = models.CharField(max_length=100)  # Store team ID as string for MongoDB compatibility
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
     objects = FitnessUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name', 'team']
+    REQUIRED_FIELDS = ['name', 'team_id']
 
     class Meta:
         db_table = 'users'
@@ -64,14 +64,14 @@ class FitnessUser(AbstractBaseUser):
 
 class Activity(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(FitnessUser, on_delete=models.CASCADE, related_name='activities')
+    user_id = models.CharField(max_length=100)  # Store user ID as string for MongoDB compatibility
     type = models.CharField(max_length=100)
     duration = models.IntegerField()  # in minutes
     date = models.DateField()
     class Meta:
         db_table = 'activities'
     def __str__(self):
-        return f"{self.user.name} - {self.type}"
+        return f"User {self.user_id} - {self.type}"
 
 class Workout(models.Model):
     id = models.AutoField(primary_key=True)
@@ -85,9 +85,9 @@ class Workout(models.Model):
 
 class Leaderboard(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(FitnessUser, on_delete=models.CASCADE, related_name='leaderboard_entries')
+    user_id = models.CharField(max_length=100)  # Store user ID as string for MongoDB compatibility
     score = models.IntegerField()
     class Meta:
         db_table = 'leaderboard'
     def __str__(self):
-        return f"{self.user.name} - {self.score}"
+        return f"User {self.user_id} - {self.score}"
