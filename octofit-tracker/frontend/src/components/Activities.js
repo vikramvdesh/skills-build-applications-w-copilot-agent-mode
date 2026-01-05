@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../utils/api';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -7,7 +8,7 @@ function Activities() {
   const [date, setDate] = useState('');
 
   useEffect(() => {
-    fetch('https://8000.app.github.dev/api/activities/')
+    fetch(`${API_BASE_URL}activities/`)
       .then(response => response.json())
       .then(data => setActivities(data))
       .catch(error => console.error('Error fetching activities:', error));
@@ -15,7 +16,7 @@ function Activities() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch('https://8000.app.github.dev/api/activities/', {
+    fetch(`${API_BASE_URL}activities/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../utils/api';
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -7,7 +8,7 @@ function Users() {
   const [team, setTeam] = useState('');
 
   useEffect(() => {
-    fetch('https://8000.app.github.dev/api/users/')
+    fetch(`${API_BASE_URL}users/`)
       .then(response => response.json())
       .then(data => setUsers(data))
       .catch(error => console.error('Error fetching users:', error));
@@ -15,7 +16,7 @@ function Users() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch('https://8000.app.github.dev/api/users/', {
+    fetch(`${API_BASE_URL}users/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

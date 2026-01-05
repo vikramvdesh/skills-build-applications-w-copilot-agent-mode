@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../utils/api';
 
 function Workouts() {
   const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {
-    fetch('https://8000.app.github.dev/api/workouts/')
+    fetch(`${API_BASE_URL}workouts/`)
       .then(response => response.json())
       .then(data => setWorkouts(data))
       .catch(error => console.error('Error fetching workouts:', error));
