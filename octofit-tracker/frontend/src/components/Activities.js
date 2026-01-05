@@ -7,21 +7,29 @@ function Activities() {
   const [date, setDate] = useState('');
 
   useEffect(() => {
-    // TODO: Fetch activities from API
-    setActivities([
-      { id: 1, type: 'Running', duration: 30, date: '2023-10-01' },
-      { id: 2, type: 'Cycling', duration: 45, date: '2023-10-02' },
-    ]);
+    fetch('https://8000.app.github.dev/api/activities/')
+      .then(response => response.json())
+      .then(data => setActivities(data))
+      .catch(error => console.error('Error fetching activities:', error));
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: API call to add activity
-    const newActivity = { id: activities.length + 1, type, duration: parseInt(duration), date };
-    setActivities([...activities, newActivity]);
-    setType('');
-    setDuration('');
-    setDate('');
+    fetch('https://8000.app.github.dev/api/activities/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ type, duration: parseInt(duration), date }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        setActivities([...activities, data]);
+        setType('');
+        setDuration('');
+        setDate('');
+      })
+      .catch(error => console.error('Error adding activity:', error));
   };
 
   return (

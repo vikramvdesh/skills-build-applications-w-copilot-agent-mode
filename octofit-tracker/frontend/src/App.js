@@ -9,6 +9,7 @@ import Activities from './components/Activities';
 import Teams from './components/Teams';
 import Leaderboard from './components/Leaderboard';
 import Workouts from './components/Workouts';
+import Users from './components/Users';
 
 function App() {
   return (
@@ -40,6 +41,9 @@ function App() {
                 <li className="nav-item">
                   <Link className="nav-link" to="/workouts">Workouts</Link>
                 </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/users">Users</Link>
+                </li>
               </ul>
               <ul className="navbar-nav">
                 <li className="nav-item">
@@ -60,6 +64,7 @@ function App() {
           <Route path="/teams" element={<Teams />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/workouts" element={<Workouts />} />
+          <Route path="/users" element={<Users />} />
           <Route path="/" element={<Dashboard />} />
         </Routes>
       </div>

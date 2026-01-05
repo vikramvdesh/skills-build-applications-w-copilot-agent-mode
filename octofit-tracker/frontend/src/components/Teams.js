@@ -5,19 +5,27 @@ function Teams() {
   const [name, setName] = useState('');
 
   useEffect(() => {
-    // TODO: Fetch teams from API
-    setTeams([
-      { id: 1, name: 'Team Alpha' },
-      { id: 2, name: 'Team Beta' },
-    ]);
+    fetch('https://8000.app.github.dev/api/teams/')
+      .then(response => response.json())
+      .then(data => setTeams(data))
+      .catch(error => console.error('Error fetching teams:', error));
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: API call to create team
-    const newTeam = { id: teams.length + 1, name };
-    setTeams([...teams, newTeam]);
-    setName('');
+    fetch('https://8000.app.github.dev/api/teams/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        setTeams([...teams, data]);
+        setName('');
+      })
+      .catch(error => console.error('Error creating team:', error));
   };
 
   return (

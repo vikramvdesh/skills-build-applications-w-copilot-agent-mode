@@ -4,11 +4,10 @@ function Workouts() {
   const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {
-    // TODO: Fetch workouts from API
-    setWorkouts([
-      { id: 1, name: 'Morning Run', description: 'A 30-minute jog', suggested_for: 'Beginners' },
-      { id: 2, name: 'Strength Training', description: 'Weight lifting session', suggested_for: 'Advanced' },
-    ]);
+    fetch('https://8000.app.github.dev/api/workouts/')
+      .then(response => response.json())
+      .then(data => setWorkouts(data))
+      .catch(error => console.error('Error fetching workouts:', error));
   }, []);
 
   return (

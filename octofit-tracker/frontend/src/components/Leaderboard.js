@@ -4,12 +4,10 @@ function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState([]);
 
   useEffect(() => {
-    // TODO: Fetch leaderboard from API
-    setLeaderboard([
-      { id: 1, user: 'Alice', score: 100 },
-      { id: 2, user: 'Bob', score: 90 },
-      { id: 3, user: 'Charlie', score: 80 },
-    ]);
+    fetch('https://8000.app.github.dev/api/leaderboard/')
+      .then(response => response.json())
+      .then(data => setLeaderboard(data))
+      .catch(error => console.error('Error fetching leaderboard:', error));
   }, []);
 
   return (
