@@ -1,14 +1,14 @@
 from rest_framework import viewsets, routers
-from .models import User, Team, Activity, Workout, Leaderboard
-from .serializers import UserSerializer, TeamSerializer, ActivitySerializer, WorkoutSerializer, LeaderboardSerializer
+from .models import FitnessUser, Team, Activity, Workout, Leaderboard
+from .serializers import FitnessUserSerializer, TeamSerializer, ActivitySerializer, WorkoutSerializer, LeaderboardSerializer
 
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class FitnessUserViewSet(viewsets.ModelViewSet):
+    queryset = FitnessUser.objects.all()
+    serializer_class = FitnessUserSerializer
 
 class ActivityViewSet(viewsets.ModelViewSet):
     queryset = Activity.objects.all()

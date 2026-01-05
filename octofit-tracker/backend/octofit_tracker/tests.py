@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import User, Team, Activity, Workout, Leaderboard
+from .models import FitnessUser, Team, Activity, Workout, Leaderboard
 from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status

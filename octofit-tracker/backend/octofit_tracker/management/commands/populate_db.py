@@ -1,13 +1,13 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
-from octofit_tracker.models import Team, Activity, Leaderboard, Workout
+from octofit_tracker.models import FitnessUser, Team, Activity, Leaderboard, Workout
 from django.db import connection
 
 class Command(BaseCommand):
     help = 'Populate the octofit_db database with test data'
 
     def handle(self, *args, **options):
-        from octofit_tracker.models import User  # Use the custom User model
+        from octofit_tracker.models import FitnessUser  # Use the custom User model
         # Clear existing data
         # Drop collections directly to avoid unhashable model errors
         db = connection.cursor().db_conn
@@ -23,10 +23,10 @@ class Command(BaseCommand):
 
         # Create Users (superheroes)
         users = [
-            User.objects.create(name='Iron Man', email='ironman@marvel.com', team=marvel),
-            User.objects.create(name='Captain America', email='cap@marvel.com', team=marvel),
-            User.objects.create(name='Batman', email='batman@dc.com', team=dc),
-            User.objects.create(name='Wonder Woman', email='wonderwoman@dc.com', team=dc),
+            FitnessUser.objects.create(name='Iron Man', email='ironman@marvel.com', team=marvel),
+            FitnessUser.objects.create(name='Captain America', email='cap@marvel.com', team=marvel),
+            FitnessUser.objects.create(name='Batman', email='batman@dc.com', team=dc),
+            FitnessUser.objects.create(name='Wonder Woman', email='wonderwoman@dc.com', team=dc),
         ]
 
         # Create Workouts
