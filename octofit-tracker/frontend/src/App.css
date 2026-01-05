@@ -1,0 +1,113 @@
+/* Global Styles */
+body {
+  background-color: #e3f2fd; /* Light blue background */
+  color: #0d47a1; /* Dark blue text */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.App {
+  min-height: 100vh;
+}
+
+/* Navigation */
+.navbar {
+  background-color: #1976d2 !important; /* Blue navbar */
+}
+
+.navbar-brand {
+  color: #ffffff !important;
+  font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+  color: #ffffff !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #bbdefb !important; /* Light blue on hover */
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: #1565c0; /* Blue headings */
+  font-weight: 600;
+}
+
+/* Links */
+a {
+  color: #1976d2; /* Blue links */
+}
+
+a:hover {
+  color: #0d47a1; /* Darker blue on hover */
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #1976d2; /* Blue buttons */
+  border-color: #1976d2;
+}
+
+.btn-primary:hover {
+  background-color: #1565c0; /* Darker blue on hover */
+  border-color: #1565c0;
+}
+
+/* Tables */
+.table {
+  background-color: #ffffff; /* White table background */
+  color: #0d47a1; /* Dark blue text */
+}
+
+.table thead th {
+  background-color: #1976d2; /* Blue table headers */
+  color: #ffffff; /* White text */
+  border-color: #1565c0;
+}
+
+.table tbody tr:hover {
+  background-color: #e3f2fd; /* Light blue hover */
+}
+
+/* Cards */
+.card {
+  background-color: #ffffff;
+  border: 1px solid #bbdefb;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #bbdefb;
+}
+
+/* Forms */
+.form-control {
+  border-color: #bbdefb;
+}
+
+.form-control:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 0 0.2rem rgba(25, 118, 210, 0.25);
+}
+
+/* Logo */
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
